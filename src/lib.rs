@@ -86,7 +86,6 @@ enum SpritePhase {
 
 #[wasm_bindgen(start)]
 pub fn main() {
-    console_error_panic_hook::set_once();
     leptos::mount::mount_to_body(App);
 }
 
