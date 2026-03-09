@@ -248,7 +248,6 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
     Effect::new(move |_| {
         let t = trigger.get();
         if t.is_empty() { return; }
-
         set_which.set(t.to_string());
         set_pos_x.set(-150.0);
         set_frame.set(0);
@@ -261,37 +260,30 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         move || {
             match phase.get() {
                 SpritePhase::Hidden => {}
-
                 SpritePhase::WalkIn => {
-                    // Cycles through the first 6 frames of the new sheet
+                    // Cycles top row frames 0-5
                     set_frame.update(|f| *f = (*f + 1) % 6);
                     set_pos_x.update(|x| *x += 4.0);
-
                     if pos_x.get() > 400.0 {
                         set_phase.set(SpritePhase::Exclamation);
                         set_bang.set(true);
-                        // Jumps to the frame with the exclamation mark (frame 7)
-                        set_frame.set(7); 
+                        set_frame.set(6); 
                         set_wait.set(0);
                     }
                 }
-
                 SpritePhase::Exclamation => {
                     set_wait.update(|w| *w += 1);
-
                     if wait_ticks.get() > 25 {
                         set_bang.set(false);
                         set_phase.set(SpritePhase::RunOut);
                     }
                 }
-
                 SpritePhase::RunOut => {
-                    // Cycles through the final 'running' frames (8-13)
+                    // Cycles bottom row frames 12-17
                     set_frame.update(|f| {
-                        if *f < 8 || *f >= 13 { *f = 8 } else { *f += 1 }
+                         if *f < 12 || *f >= 17 { *f = 12 } else { *f += 1 }
                     });
                     set_pos_x.update(|x| *x -= 8.0);
-
                     if pos_x.get() < -150.0 {
                         set_phase.set(SpritePhase::Hidden);
                     }
@@ -301,56 +293,49 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         Duration::from_millis(60),
     );
 
-    // UPDATED: Now 14 frames wide
     let disp: u32 = 96;
-    let sheet_w: u32 = disp * 14; 
+    let frames_per_row: u32 = 12;
 
     let container_style = move || {
-        if phase.get() == SpritePhase::Hidden {
-            return "display:none;".to_string();
-        }
+        if phase.get() == SpritePhase::Hidden { return "display:none;".to_string(); }
         let x = pos_x.get() as i64;
-        format!(
-            "display:block;position:fixed;left:{x}px;bottom:0px;\
-             width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;"
-        )
+        format!("display:block;position:fixed;left:{x}px;bottom:0px;\
+                 width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;")
     };
 
     let sprite_style = move || {
         let src = which.get();
         if src.is_empty() { return "display:none;".to_string(); }
 
-        let f   = frame.get();
-        let off = f * disp;
+        let f = frame.get();
+        let col = f % frames_per_row;
+        let row = f / frames_per_row;
 
-        let flip = if phase.get() == SpritePhase::RunOut {
-            "transform:scaleX(-1);"
-        } else {
-            ""
-        };
+        // FIXED: Explicit type casting to f64 for percentage math
+        let x_percent = (col as f64 / (frames_per_row as f64 - 1.0)) * 100.0;
+        let y_percent = if row == 0 { 0.0 } else { 100.0 };
+
+        let flip = if phase.get() == SpritePhase::RunOut { "transform:scaleX(-1);" } else { "" };
 
         format!(
             "width:{disp}px;height:{disp}px;\
              background-image:url('public/{src}.png');\
              background-repeat:no-repeat;\
-             background-size:{sheet_w}px auto;\
-             background-position:-{off}px 0px;\
+             background-size:1200% 200%;\
+             background-position:{x_percent}% {y_percent}%;\
              image-rendering:pixelated;\
              {flip}"
         )
     };
 
-    let bang_style = move || {
-        if !show_bang.get() { return "display:none;".to_string(); }
-        "position:absolute;top:-38px;left:32px;font-size:40px;font-weight:900;\
-         color:#ffdd44;text-shadow:0 0 12px #ffaa00,0 2px 0 #000;\
-         animation:bang-pop 0.35s ease-out;".to_string()
-    };
-
     view! {
         <div style=container_style>
             <div style=sprite_style></div>
-            <div style=bang_style>"!"</div>
+            <Show when=move || show_bang.get()>
+                <div style="position:absolute;top:-38px;left:32px;font-size:40px;\
+                            font-weight:900;color:#ffdd44;text-shadow:0 0 12px #ffaa00;\
+                            animation:bang-pop 0.35s ease-out;">"!"</div>
+            </Show>
         </div>
     }
 }
