@@ -338,7 +338,7 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         format!(
             "width:{disp}px;\
              height:{disp}px;\
-             background-image:url('/public/{src}.png');\
+             background-image:url('public/{src}.png');\
              background-repeat:no-repeat;\
              background-size:{sheet_w}px {disp}px;\
              background-position:-{off}px 0px;\
