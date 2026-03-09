@@ -306,13 +306,12 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
             match phase.get() {
                 SpritePhase::Hidden => {}
                 SpritePhase::WalkIn => {
-                    // Cycles top row frames 0-5
                     set_frame.update(|f| *f = (*f + 1) % 6);
                     set_pos_x.update(|x| *x += 4.0);
                     if pos_x.get() > 400.0 {
                         set_phase.set(SpritePhase::Exclamation);
                         set_bang.set(true);
-                        set_frame.set(6); 
+                        set_frame.set(0);
                         set_wait.set(0);
                     }
                 }
@@ -324,10 +323,7 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
                     }
                 }
                 SpritePhase::RunOut => {
-                    // Cycles bottom row frames 12-17
-                    set_frame.update(|f| {
-                         if *f < 12 || *f >= 17 { *f = 12 } else { *f += 1 }
-                    });
+                    set_frame.update(|f| *f = 6 + (*f + 1) % 2);
                     set_pos_x.update(|x| *x -= 8.0);
                     if pos_x.get() < -150.0 {
                         set_phase.set(SpritePhase::Hidden);
