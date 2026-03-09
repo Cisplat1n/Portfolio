@@ -29,7 +29,7 @@ jobs:
         run: cargo install trunk
 
       - name: Build
-        run: trunk build --release --public-url "/portfolio/"
+        run: trunk build --release --public-url "/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
