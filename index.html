@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Portfolio</title>
+
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="/Portfolio/main-afa7f96deffd9ff.css" integrity="sha384-a+Lz6ir4NQz+vw37JtyrCG7kEVGzYK6rdC+2UnuAII1JCHEpDQEjtpyNzgreNXAc"/>
+
+    <!-- Copy sprite images -->
+    
+
+  <link rel="modulepreload" href="/Portfolio/portfolio-5a2f940aa532419b.js" crossorigin="anonymous" integrity="sha384-b55YBKvvRbLEflROa6hNAWEcGJeKMllryo8iPy0RbfqjsyDCyyrKxR2+onSnxZvP"><link rel="preload" href="/Portfolio/portfolio-5a2f940aa532419b_bg.wasm" crossorigin="anonymous" integrity="sha384-fTdhFc2fLWNZFJ2z0QvuPS0Dz0tEeHps3gEdd7oTZloVhGP6SxVloYyLiW7oHqts" as="fetch" type="application/wasm"></head>
+  <body>
+<script type="module">
+import init, * as bindings from '/Portfolio/portfolio-5a2f940aa532419b.js';
+const wasm = await init({ module_or_path: '/Portfolio/portfolio-5a2f940aa532419b_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>
