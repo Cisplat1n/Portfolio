@@ -260,17 +260,18 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
     leptos::leptos_dom::helpers::set_interval(
         move || {
             match phase.get() {
-
                 SpritePhase::Hidden => {}
 
                 SpritePhase::WalkIn => {
+                    // Cycles through the first 6 frames of the new sheet
                     set_frame.update(|f| *f = (*f + 1) % 6);
                     set_pos_x.update(|x| *x += 4.0);
 
                     if pos_x.get() > 400.0 {
                         set_phase.set(SpritePhase::Exclamation);
                         set_bang.set(true);
-                        set_frame.set(0);
+                        // Jumps to the frame with the exclamation mark (frame 7)
+                        set_frame.set(7); 
                         set_wait.set(0);
                     }
                 }
@@ -285,7 +286,10 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
                 }
 
                 SpritePhase::RunOut => {
-                    set_frame.update(|f| *f = 6 + (*f + 1) % 2);
+                    // Cycles through the final 'running' frames (8-13)
+                    set_frame.update(|f| {
+                        if *f < 8 || *f >= 13 { *f = 8 } else { *f += 1 }
+                    });
                     set_pos_x.update(|x| *x -= 8.0);
 
                     if pos_x.get() < -150.0 {
@@ -297,34 +301,24 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         Duration::from_millis(60),
     );
 
-    // Sprite sheet setup
+    // UPDATED: Now 14 frames wide
     let disp: u32 = 96;
-    let sheet_w: u32 = disp * 8;
+    let sheet_w: u32 = disp * 14; 
 
     let container_style = move || {
         if phase.get() == SpritePhase::Hidden {
             return "display:none;".to_string();
         }
-
         let x = pos_x.get() as i64;
-
         format!(
-            "display:block;\
-             position:fixed;\
-             left:{x}px;\
-             bottom:0px;\
-             width:{disp}px;\
-             height:{disp}px;\
-             z-index:9999;\
-             pointer-events:none;"
+            "display:block;position:fixed;left:{x}px;bottom:0px;\
+             width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;"
         )
     };
 
     let sprite_style = move || {
         let src = which.get();
-        if src.is_empty() {
-            return "display:none;".to_string();
-        }
+        if src.is_empty() { return "display:none;".to_string(); }
 
         let f   = frame.get();
         let off = f * disp;
@@ -336,32 +330,21 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         };
 
         format!(
-            "width:{disp}px;\
-             height:{disp}px;\
+            "width:{disp}px;height:{disp}px;\
              background-image:url('public/{src}.png');\
              background-repeat:no-repeat;\
-             background-size:{sheet_w}px {disp}px;\
+             background-size:{sheet_w}px auto;\
              background-position:-{off}px 0px;\
              image-rendering:pixelated;\
-             image-rendering:crisp-edges;\
              {flip}"
         )
     };
 
     let bang_style = move || {
-        if !show_bang.get() {
-            return "display:none;".to_string();
-        }
-
-        "position:absolute;\
-         top:-38px;\
-         left:32px;\
-         font-size:40px;\
-         font-weight:900;\
-         color:#ffdd44;\
-         text-shadow:0 0 12px #ffaa00,0 2px 0 #000;\
-         animation:bang-pop 0.35s ease-out;"
-            .to_string()
+        if !show_bang.get() { return "display:none;".to_string(); }
+        "position:absolute;top:-38px;left:32px;font-size:40px;font-weight:900;\
+         color:#ffdd44;text-shadow:0 0 12px #ffaa00,0 2px 0 #000;\
+         animation:bang-pop 0.35s ease-out;".to_string()
     };
 
     view! {
