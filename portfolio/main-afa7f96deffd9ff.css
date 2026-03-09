@@ -1,0 +1,359 @@
+/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+    background: #0d0f14;
+    color: #c8cdd8;
+    font-family: 'Courier New', 'Consolas', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ─── App Shell ─────────────────────────────────────────────────────────────── */
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 48px 20px;
+    background: #0d0f14;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.site-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e8eaf0;
+    letter-spacing: -0.5px;
+}
+
+.site-tagline {
+    font-size: 0.85rem;
+    color: #5a6078;
+    letter-spacing: 0.05em;
+}
+
+.site-nav {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+    color: #5a6078;
+    letter-spacing: 0.05em;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover {
+    color: #c8cdd8;
+}
+
+.nav-link.active {
+    color: #4f9eff;
+    border-bottom-color: #4f9eff;
+}
+
+.header-divider {
+    height: 1px;
+    background: #252a38;
+    margin: 0 48px;
+}
+
+/* ─── Main Content ──────────────────────────────────────────────────────────── */
+
+.main-content {
+    flex: 1;
+    padding: 36px 48px 40px;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ─── Filter Bar ────────────────────────────────────────────────────────────── */
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    color: #5a6078;
+    white-space: nowrap;
+}
+
+.filter-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid #252a38;
+    background: #13161e;
+    color: #5a6078;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+}
+
+.pill:hover {
+    border-color: #4f9eff;
+    color: #c8cdd8;
+}
+
+.pill-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid #4f9eff;
+    background: rgba(79, 158, 255, 0.12);
+    color: #4f9eff;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+}
+
+.pill-active:hover {
+    background: rgba(79, 158, 255, 0.2);
+}
+
+.pill-x {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-left: 2px;
+}
+
+/* ─── Project Grid ──────────────────────────────────────────────────────────── */
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    align-items: start;
+}
+
+.category-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4f9eff;
+    letter-spacing: 0.04em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #252a38;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ─── Project Card ──────────────────────────────────────────────────────────── */
+
+.card {
+    display: block;
+    background: #13161e;
+    border: 1px solid #252a38;
+    border-radius: 6px;
+    padding: 16px 18px;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    cursor: pointer;
+}
+
+.card:hover {
+    background: #1a1e28;
+    border-color: rgba(79, 158, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #dde1ec;
+    margin-bottom: 6px;
+}
+
+.card-desc {
+    font-size: 0.78rem;
+    color: #5a6078;
+    line-height: 1.55;
+    margin-bottom: 10px;
+}
+
+.card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.card-tag {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(79, 158, 255, 0.08);
+    color: rgba(79, 158, 255, 0.8);
+    border: 1px solid rgba(79, 158, 255, 0.15);
+    letter-spacing: 0.03em;
+}
+
+/* ─── Sprite Bar ────────────────────────────────────────────────────────────── */
+
+.sprite-bar {
+    position: relative;
+    height: 100px;        /* was 72px — needs more room */
+    background: #13161e;
+    border-top: 1px solid #252a38;
+    overflow: visible;    /* change from hidden to visible */
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.sprite-ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(
+        90deg,
+        #1a1e28 0px,
+        #1a1e28 8px,
+        #252a38 8px,
+        #252a38 16px
+    );
+}
+
+/* ─── Mascot Container ───────────────────────────────────────────────────── */
+
+.mascot-container {
+    position: absolute;
+    bottom: 8px;                 /* sits on the ground */
+    left: -80px;                 /* start off-screen */
+    width: 64px;
+    height: 64px;
+    pointer-events: none;        /* purely decorative */
+}
+
+/* ─── Sprite Animation ───────────────────────────────────────────────────── */
+
+.sprite {
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+
+    /* sprite sheet size */
+    background-size: 512px 64px;
+
+    animation: sprite-walk 0.8s steps(8) infinite;
+}
+
+/* walk cycle */
+@keyframes sprite-walk {
+    from { background-position: 0px 0px; }
+    to   { background-position: -512px 0px; }
+}
+
+/* ─── Mascot Movement ───────────────────────────────────────────────────── */
+
+.mascot-enter {
+    animation: mascot-enter 2.5s ease-out forwards;
+}
+
+@keyframes mascot-enter {
+    0%   { left: -80px; }
+    60%  { left: 40%; }
+    100% { left: 45%; }
+}
+
+.mascot-exit {
+    animation: mascot-exit 2s ease-in forwards;
+}
+
+@keyframes mascot-exit {
+    0%   { left: 45%; }
+    100% { left: 110%; }
+}
+
+/* ─── Exclamation Mark ───────────────────────────────────────────────────── */
+
+.exclaim {
+    position: absolute;
+    top: -20px;
+    left: 24px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffcc66;
+    text-shadow: 0 0 6px rgba(255, 200, 80, 0.6);
+    animation: bang-pop 0.35s ease-out;
+}
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .site-header {
+        padding: 20px 20px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .header-divider { margin: 0 20px; }
+
+    .main-content { padding: 24px 20px 32px; }
+
+    .project-grid { grid-template-columns: 1fr; }
+
+    .site-name { font-size: 1.5rem; }
+}
+
+/* ─── Sprite Bang Animation ─────────────────────────────────────────────────── */
+
+@keyframes bang-pop {
+    0%   { transform: scale(0) translateY(10px); opacity: 0; }
+    60%  { transform: scale(1.4) translateY(-4px); opacity: 1; }
+    100% { transform: scale(1) translateY(0px); opacity: 1; }
+}
