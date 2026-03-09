@@ -29,10 +29,11 @@ jobs:
         run: cargo install trunk
 
       - name: Build
-        run: trunk build --release --public-url "/"
+        run: trunk build --release --public-url "/portfolio/"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          destination_dir: portfolio
