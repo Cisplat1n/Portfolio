@@ -302,27 +302,38 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         format!("display:block;position:fixed;left:{x}px;bottom:0px;\
                  width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;")
     };
-
     let sprite_style = move || {
         let src = which.get();
         if src.is_empty() { return "display:none;".to_string(); }
 
         let f = frame.get();
-        let col = f % frames_per_row;
-        let row = f / frames_per_row;
+        
+        // 1. Explicitly use f64 for all math to avoid casting errors
+        let frames_per_row = 12.0f64; 
+        let img_width = 1414.0f64;
+        let img_height = 176.0f64;
+        
+        // 2. Calculate cell size based on your 1414x176 image
+        let cell_width = img_width / frames_per_row;   // ~117.83px
+        let cell_height = img_height / 2.0;            // 88.0px
+        
+        // 3. FIX: Use the variable in the math to clear the 'unused' warning
+        // Use floor() to ensure we stay within the correct grid cell
+        let col = (f as f64 % frames_per_row);
+        let row = (f as f64 / frames_per_row).floor();
 
-        // FIXED: Explicit type casting to f64 for percentage math
-        let x_percent = (col as f64 / (frames_per_row as f64 - 1.0)) * 100.0;
-        let y_percent = if row == 0 { 0.0 } else { 100.0 };
+        let off_x = col * cell_width;
+        let off_y = row * cell_height;
 
         let flip = if phase.get() == SpritePhase::RunOut { "transform:scaleX(-1);" } else { "" };
 
         format!(
-            "width:{disp}px;height:{disp}px;\
+            "width:{cell_width}px;\
+             height:{cell_height}px;\
              background-image:url('public/{src}.png');\
              background-repeat:no-repeat;\
-             background-size:1200% 200%;\
-             background-position:{x_percent}% {y_percent}%;\
+             background-size:{img_width}px {img_height}px;\
+             background-position:-{off_x}px -{off_y}px;\
              image-rendering:pixelated;\
              {flip}"
         )
