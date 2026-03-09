@@ -357,3 +357,91 @@ a { text-decoration: none; color: inherit; }
     60%  { transform: scale(1.4) translateY(-4px); opacity: 1; }
     100% { transform: scale(1) translateY(0px); opacity: 1; }
 }
+/* ─── Modal ─────────────────────────────────────────────────────────────────── */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.modal {
+    background: #13161e;
+    border: 1px solid #252a38;
+    border-radius: 10px;
+    padding: 36px 40px;
+    max-width: 560px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    animation: modal-in 0.2s ease-out;
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #5a6078;
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.modal-close:hover {
+    color: #c8cdd8;
+    background: #1a1e28;
+}
+
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e8eaf0;
+    margin-bottom: 12px;
+}
+
+.modal-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.modal-desc {
+    font-size: 0.88rem;
+    color: #8b92a8;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.modal-link {
+    display: inline-block;
+    padding: 10px 22px;
+    background: rgba(79, 158, 255, 0.12);
+    border: 1px solid rgba(79, 158, 255, 0.4);
+    border-radius: 6px;
+    color: #4f9eff;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.85rem;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.modal-link:hover {
+    background: rgba(79, 158, 255, 0.22);
+    border-color: #4f9eff;
+}
