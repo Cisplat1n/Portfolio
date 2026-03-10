@@ -555,10 +555,6 @@ a { text-decoration: none; color: inherit; }
 
 .stat {
     font-size: 0.7rem;
-    color: #3d4460;
-    letter-spacing: 0.03em;
-}
-
-.stat span {
     color: #5a6078;
+    letter-spacing: 0.03em;
 }
