@@ -173,6 +173,116 @@ fn Header() -> impl IntoView {
     }
 }
 
+// ─── DNA ──────────────────────────────────────────────────────────────────
+
+
+#[component]
+fn DnaBackground() -> impl IntoView {
+    use wasm_bindgen::JsCast;
+
+    Effect::new(move |_| {
+        let window = web_sys::window().unwrap();
+        let document = window.document().unwrap();
+        let canvas = document
+            .get_element_by_id("dna-canvas")
+            .unwrap()
+            .dyn_into::<web_sys::HtmlCanvasElement>()
+            .unwrap();
+
+        let ctx = canvas
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::<web_sys::CanvasRenderingContext2d>()
+            .unwrap();
+
+        let w = window.inner_width().unwrap().as_f64().unwrap() as u32;
+        let h = window.inner_height().unwrap().as_f64().unwrap() as u32;
+        canvas.set_width(w);
+        canvas.set_height(h);
+
+        let col_width = 52.0f64;   // width per helix column
+        let char_h = 16.0f64;      // vertical spacing between chars
+        let num_cols = (w as f64 / col_width).ceil() as i32;
+        let num_rows = (h as f64 / char_h).ceil() as i32 + 4;
+        let chars = ['A', 'T', 'G', 'C'];
+
+        let t = std::rc::Rc::new(std::cell::Cell::new(0.0f64));
+        let draw: std::rc::Rc<std::cell::RefCell<Option<wasm_bindgen::closure::Closure<dyn FnMut()>>>> =
+            std::rc::Rc::new(std::cell::RefCell::new(None));
+        let draw_clone = draw.clone();
+        let t_clone = t.clone();
+
+        *draw.borrow_mut() = Some(wasm_bindgen::closure::Closure::wrap(Box::new(move || {
+            let time = t_clone.get();
+            t_clone.set(time + 0.018);
+
+            // Fade trail
+            ctx.set_fill_style_str("rgba(13, 15, 20, 0.15)");
+            ctx.fill_rect(0.0, 0.0, w as f64, h as f64);
+
+            ctx.set_font("11px monospace");
+
+            for col in 0..num_cols {
+                let cx = col as f64 * col_width + col_width / 2.0;
+                // Each column scrolls at slightly different speed
+                let speed = 0.8 + (col as f64 * 0.17) % 0.6;
+                let scroll = (time * speed * char_h) % (num_rows as f64 * char_h);
+
+                for row in 0..num_rows {
+                    let y = row as f64 * char_h - scroll + (num_rows as f64 * char_h);
+                    let y = y % (num_rows as f64 * char_h);
+
+                    // Sine wave offset for left strand
+                    let wave_phase = (row as f64 * 0.45) + time * speed;
+                    let strand_offset = wave_phase.sin() * 18.0;
+
+                    // Depth for brightness
+                    let depth = (wave_phase.sin() + 1.0) / 2.0;
+                    let alpha_strand = 0.06 + depth * 0.14;
+                    let alpha_rung = 0.04;
+
+                    // Left strand char
+                    let ci_l = (row as usize + col as usize * 3 + (time * 3.0) as usize) % 4;
+                    ctx.set_fill_style_str(&format!("rgba(79, 200, 180, {:.2})", alpha_strand));
+                    ctx.fill_text(
+                        &chars[ci_l].to_string(),
+                        cx - 10.0 + strand_offset,
+                        y,
+                    ).unwrap();
+
+                    // Right strand char (opposite phase)
+                    let ci_r = (row as usize + col as usize * 5 + 2 + (time * 3.0) as usize) % 4;
+                    let alpha_r = 0.06 + (1.0 - depth) * 0.14;
+                    ctx.set_fill_style_str(&format!("rgba(79, 200, 180, {:.2})", alpha_r));
+                    ctx.fill_text(
+                        &chars[ci_r].to_string(),
+                        cx + 10.0 - strand_offset,
+                        y,
+                    ).unwrap();
+
+                    // Rung between strands when they cross
+                    if strand_offset.abs() < 6.0 {
+                        ctx.set_fill_style_str(&format!("rgba(120, 220, 200, {:.2})", alpha_rung));
+                        ctx.fill_text("|", cx, y).unwrap();
+                    }
+                }
+            }
+
+            let cb = draw_clone.borrow();
+            let func = cb.as_ref().unwrap().as_ref().unchecked_ref::<js_sys::Function>();
+            web_sys::window().unwrap().request_animation_frame(func).unwrap();
+        }) as Box<dyn FnMut()>));
+
+        let cb = draw.borrow();
+        let func = cb.as_ref().unwrap().as_ref().unchecked_ref::<js_sys::Function>();
+        web_sys::window().unwrap().request_animation_frame(func).unwrap();
+    });
+
+    view! {
+        <canvas id="dna-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"/>
+    }
+}
 // ─── Filter Bar ──────────────────────────────────────────────────────────────
 
 #[component]
