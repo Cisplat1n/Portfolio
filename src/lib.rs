@@ -62,7 +62,7 @@ fn all_projects() -> Vec<Project> {
 
         Project {
             title: "Project Taispeantas Radharc",
-            desc: "a compact showcase demonstrating how to transform raw data into interactive, browser-ready charts using three different programming languages.",
+            desc: "A compact showcase demonstrating how to transform raw data into interactive, browser-ready charts using three different programming languages.",
             long_desc: "Each demo operates independently, but all share a common goal. Accept raw tabular data (CSV, JSON, or similar), process and transform the data as needed, generate interactive, web-compatible visualisations, and display results in a browser (or wherever  appropriate).The goal is to provide clear, comparable examples of data visualisation across ecosystems.",
             tags: &["Python", "R", "JavaScript"],
             url: "https://github.com/Cisplat1n/Project_Taispeantas_Radharc",
@@ -94,6 +94,7 @@ const CATEGORIES: &[(&str, &str)] = &[
     ("Python", "🐍"),
     ("Data Science",""),
     ("Collaboration", ""),
+    ("Notes",""),
 ];
 
 // ─── Sprite State ────────────────────────────────────────────────────────────
