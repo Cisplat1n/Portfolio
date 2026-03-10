@@ -1,5 +1,6 @@
 use leptos::prelude::*;
 use wasm_bindgen::prelude::*;
+use wasm_bindgen_futures::spawn_local;
 use std::time::Duration;
 use std::sync::Arc;
 
@@ -239,6 +240,57 @@ fn ProjectGrid(projects: Memo<Vec<Project>>, set_modal: WriteSignal<Option<Proje
 
 #[component]
 fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> impl IntoView {
+    let (commits, set_commits) = signal::<Option<String>>(None);
+    let (updated, set_updated) = signal::<Option<String>>(None);
+
+    let url = project.url;
+    let repo_path = url.trim_start_matches("https://github.com/").to_string();
+
+    if !repo_path.is_empty() && url.contains("github.com") {
+        let repo_path_clone = repo_path.clone();
+        spawn_local(async move {
+            let api_url = format!("https://api.github.com/repos/{}", repo_path_clone);
+            if let Ok(resp) = gloo_net::http::Request::get(&api_url)
+                .header("Accept", "application/vnd.github.v3+json")
+                .send()
+                .await
+            {
+                if let Ok(json) = resp.json::<serde_json::Value>().await {
+                    if let Some(pushed) = json["pushed_at"].as_str() {
+                        let date = pushed.get(..10).unwrap_or(pushed).to_string();
+                        set_updated.set(Some(date));
+                    }
+                }
+            }
+
+            let commits_url = format!(
+                "https://api.github.com/repos/{}/commits?per_page=1",
+                repo_path_clone
+            );
+            if let Ok(resp) = gloo_net::http::Request::get(&commits_url)
+                .header("Accept", "application/vnd.github.v3+json")
+                .send()
+                .await
+            {
+                let count = resp
+                    .headers()
+                    .get("link")
+                    .and_then(|link| {
+                        link.split(',')
+                            .find(|s| s.contains("rel=\"last\""))
+                            .and_then(|s| {
+                                s.split("&page=").nth(1)
+                                    .or_else(|| s.split("?page=").nth(1))
+                                    .and_then(|s| s.split('>').next())
+                                    .and_then(|n| n.parse::<u32>().ok())
+                            })
+                    })
+                    .unwrap_or(1);
+                set_commits.set(Some(count.to_string()));
+            }
+        });
+    }
+
     let p = project.clone();
     view! {
         <div class="card" on:click=move |_| set_modal.set(Some(p.clone()))>
@@ -249,10 +301,19 @@ fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> imp
                     <span class="card-tag">{t}</span>
                 }).collect_view()}
             </div>
+            <div class="card-stats">
+                <span class="stat">
+                    "commits: "
+                    {move || commits.get().unwrap_or_else(|| "…".to_string())}
+                </span>
+                <span class="stat">
+                    "updated: "
+                    {move || updated.get().unwrap_or_else(|| "…".to_string())}
+                </span>
+            </div>
         </div>
     }
 }
-
 // ─── Project Modal ───────────────────────────────────────────────────────────
 
 #[component]
