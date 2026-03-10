@@ -18,12 +18,15 @@ struct Project {
 fn all_projects() -> Vec<Project> {
     vec![
         Project {
-            title: "Inference Cluster",
-            desc: "Distributed llama.cpp inference across BC-250 + MI50 over 10GbE RPC.",
-            long_desc: "A homelab distributed inference cluster built from budget GPU hardware — an ASRock BC-250 (16GB GDDR6) and AMD MI50 (32GB HBM2) connected over 10 Gigabit Ethernet. Uses llama.cpp's RPC backend to split model layers across both nodes, enabling larger models than either card could run alone. Managed via Ollama with Open WebUI as the frontend. The whole setup runs on ROCm and cost under $400 in hardware.",
-            tags: &["Rust", "Hardware"],
-            url: "#",
-            category: "Rust",
+            title: "Project Intleacht Shaorga",
+            desc: "A proof-of-concept showcasing how a Large Language Model (LLM), accessed via an API key, can be used as an intelligent data quality assistant.",
+            long_desc: "Instead of manually writing repetitive validation and cleaning logic, this tool, accepts structured instructions and a statistics about a pandas dataframe, Builds a prompt from a predefined, constrained skeleton (which also has a helper_reg for additional constraints),
+            Sends that prompt to an LLM (GLM-4.7) via an API (Cerebras Inference), Receives suggested transformations and reasonings/justifications, 
+            Then also enables the user to send the stats and suggested transformations back to the LLM for additional suggestions
+            The goal is not blind automation, but transparent, explainable data tidying.",
+            tags: &["ML / AI", "Python"],
+            url: "https://github.com/Cisplat1n/Project_Intleacht_Shaorga",
+            category: "Python",
         },
         Project {
             title: "This Portfolio",
@@ -34,37 +37,22 @@ fn all_projects() -> Vec<Project> {
             category: "Rust",
         },
         Project {
-            title: "LLM Data Pipeline",
-            desc: "High-throughput data pipeline for LLM training dataset curation and filtering.",
-            long_desc: "A scalable data pipeline for curating and filtering large-scale text datasets used in LLM pretraining and fine-tuning. Handles deduplication, quality filtering, language detection, and formatting into standardised training formats. Built to process hundreds of gigabytes efficiently with parallelised Python workers and streaming I/O.",
-            tags: &["ML / AI", "Python"],
-            url: "#",
-            category: "ML / AI",
+            title: "Project_FiligineachtV2-RUST",
+            desc: "Discordance resolution pipeline for phylogenetic quartets leveraging PhySquirrel to build consensus networks.",
+            long_desc: "A port of my MSc dissertation project (orignally written in python) in Rust, it looks to handle some of the performance and scaling issues flagged during my MSc presentation (file scaling, compute cost, process time etc.). It extracts quartets of taxa from gene trees, roots them to make semi directed where appropriate, and then feeds them into the PhySquirrel python library (via PyO3 bindings) to make a level 1 semi directed consensus network. ",
+            tags: &["Rust", "Data Science"],
+            url: "https://github.com/Cisplat1n/Project_FiligineachtV2-RUST",
+            category: "Rust",
         },
         Project {
-            title: "Model Evaluation Harness",
-            desc: "Automated evaluation framework for benchmarking inference quality and latency.",
-            long_desc: "An automated evaluation framework for systematically benchmarking LLM quality and performance. Supports multiple model backends, configurable benchmark suites, and produces structured reports comparing accuracy, latency, and throughput across model versions. Designed to integrate into CI pipelines to catch regressions before deployment.",
-            tags: &["ML / AI", "Python"],
-            url: "#",
-            category: "ML / AI",
+            title: "",
+            desc: "",
+            long_desc: "",
+            tags: &["", ""],
+            url: "",
+            category: "",
         },
-        Project {
-            title: "Quartet Extraction Engine",
-            desc: "Music analysis tool for extracting instrument parts from quartet recordings.",
-            long_desc: "A signal processing tool for separating individual instrument parts from mixed string quartet recordings. Uses source separation techniques combined with pitch tracking and onset detection to isolate violin, viola, and cello lines. Outputs per-instrument audio and MIDI transcriptions for further analysis or practice use.",
-            tags: &["Python", "Data Science"],
-            url: "#",
-            category: "Data Science",
-        },
-        Project {
-            title: "Statistical Modelling Suite",
-            desc: "R-based Bayesian modelling toolkit for time-series and regression analysis.",
-            long_desc: "A collection of Bayesian statistical models built in R using Stan and brms for time-series forecasting and regression analysis. Includes hierarchical models, changepoint detection, and posterior predictive checks. Designed for reproducible research with fully documented model specifications and diagnostic plots.",
-            tags: &["R", "Data Science"],
-            url: "#",
-            category: "Data Science",
-        },
+
     ]
 }
 
