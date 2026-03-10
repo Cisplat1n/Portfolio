@@ -111,6 +111,15 @@ enum SpritePhase {
 
 #[wasm_bindgen(start)]
 pub fn main() {
+    // Preload sprite images so they're cached on first use
+    let document = web_sys::window().unwrap().document().unwrap();
+    for src in &["crab", "snake"] {
+        let img = document.create_element("img").unwrap();
+        img.set_attribute("src", &format!("/portfolio/public/{}.png", src)).unwrap();
+        img.set_attribute("style", "display:none").unwrap();
+        document.body().unwrap().append_child(&img).unwrap();
+    }
+
     leptos::mount::mount_to_body(App);
 }
 
