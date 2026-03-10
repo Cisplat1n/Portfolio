@@ -290,6 +290,16 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
     let (show_bang, set_bang)  = signal(false);
     let (wait_ticks, set_wait) = signal(0u32);
 
+    // Get window width for responsive sprite stop position
+    let win_width = move || {
+        web_sys::window()
+            .unwrap()
+            .inner_width()
+            .ok()
+            .and_then(|v| v.as_f64())
+            .unwrap_or(1024.0)
+    };
+
     Effect::new(move |_| {
         let t = trigger.get();
         if t.is_empty() { return; }
@@ -308,7 +318,9 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
                 SpritePhase::WalkIn => {
                     set_frame.update(|f| *f = (*f + 1) % 6);
                     set_pos_x.update(|x| *x += 4.0);
-                    if pos_x.get() > 400.0 {
+                    // Stop at 40% of screen width so it's always visible
+                    let stop = win_width() * 0.4;
+                    if pos_x.get() > stop {
                         set_phase.set(SpritePhase::Exclamation);
                         set_bang.set(true);
                         set_frame.set(0);
@@ -325,7 +337,8 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
                 SpritePhase::RunOut => {
                     set_frame.update(|f| *f = 6 + (*f + 1) % 2);
                     set_pos_x.update(|x| *x -= 8.0);
-                    if pos_x.get() < -150.0 {
+                    // Hide once fully off the left edge
+                    if pos_x.get() < -160.0 {
                         set_phase.set(SpritePhase::Hidden);
                     }
                 }
@@ -334,33 +347,43 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         Duration::from_millis(60),
     );
 
-// Sheet: 512x64, 8 frames x 64x64, displayed at 2x = 128x128
-    let disp: u32 = 128;
-    let sheet_w: u32 = 1024;
-    let sheet_h: u32 = 128;
-
     let container_style = move || {
         if phase.get() == SpritePhase::Hidden { return "display:none;".to_string(); }
         let x = pos_x.get() as i64;
         format!("display:block;position:fixed;left:{x}px;bottom:0px;\
-                 width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;")
+                 width:166px;height:125px;z-index:9999;pointer-events:none;")
     };
-
     let sprite_style = move || {
         let src = which.get();
         if src.is_empty() { return "display:none;".to_string(); }
+
         let f = frame.get();
-        let off = f * disp;
+        
+        // 1. Explicitly use f64 for all math to avoid casting errors
+        let frames_per_row = 12.0f64;
+        let img_width = 2000.0f64;
+        let img_height = 250.0f64;
+
+        // Each cell is exactly 166x125
+        let cell_width = 166.0f64;
+        let cell_height = 125.0f64;
+
+        let col = (f as f64 % frames_per_row).floor();
+        let row = (f as f64 / frames_per_row).floor();
+
+        let off_x = col * cell_width;
+        let off_y = row * cell_height;
+
         let flip = if phase.get() == SpritePhase::RunOut { "transform:scaleX(-1);" } else { "" };
+
         format!(
-            "width:{disp}px;\
-             height:{disp}px;\
-             background-image:url('/portfolio/public/{src}.png');\
+            "width:{cell_width}px;\
+             height:{cell_height}px;\
+             background-image:url('public/{src}.png');\
              background-repeat:no-repeat;\
-             background-size:{sheet_w}px {sheet_h}px;\
-             background-position:-{off}px 0px;\
+             background-size:{img_width}px {img_height}px;\
+             background-position:-{off_x}px -{off_y}px;\
              image-rendering:pixelated;\
-             image-rendering:crisp-edges;\
              {flip}"
         )
     };
