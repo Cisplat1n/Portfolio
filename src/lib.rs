@@ -127,6 +127,7 @@ pub fn App() -> impl IntoView {
 
     view! {
         <div class="app">
+            <DnaBackground />
             <Header />
             <main class="main-content">
                 <FilterBar active=active_tag on_select=on_select />
