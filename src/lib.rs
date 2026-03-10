@@ -147,13 +147,27 @@ pub fn App() -> impl IntoView {
 
 #[component]
 fn Header() -> impl IntoView {
+    let (dark, set_dark) = signal(true);
+
+    Effect::new(move |_| {
+        let doc = web_sys::window().unwrap().document().unwrap();
+        let html = doc.document_element().unwrap();
+        if dark.get() {
+            html.remove_attribute("data-theme").unwrap();
+        } else {
+            html.set_attribute("data-theme", "light").unwrap();
+        }
+    });
+
     view! {
         <header class="site-header">
             <div class="header-left">
                 <h1 class="site-name">"Luke Sal" <span>""</span></h1>
-                <p class="site-tagline">"Rust & Python Progammer · Data Scientist "</p>
+                <p class="site-tagline">"Rust & Python Programmer · Data Scientist"</p>
             </div>
-
+            <button class="theme-toggle" on:click=move |_| set_dark.update(|d| *d = !*d)>
+                {move || if dark.get() { "☀ Light" } else { "☾ Dark" }}
+            </button>
         </header>
         <div class="header-divider" />
     }
@@ -346,7 +360,7 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         },
         Duration::from_millis(60),
     );
-    
+
     let disp: u32 = 64;
     let sheet_w: u32 = 512;
     let sheet_h: u32 = 64;

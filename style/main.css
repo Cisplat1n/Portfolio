@@ -491,3 +491,55 @@ a { text-decoration: none; color: inherit; }
     .header-divider { margin: 0 16px; }
 }
 
+/* ─── Light Mode ─────────────────────────────────────────────────────────── */
+[data-theme="light"] body {
+    background: #f5f6fa;
+    color: #2a2d3a;
+}
+
+[data-theme="light"] .site-header,
+[data-theme="light"] .app { background: #f5f6fa; }
+
+[data-theme="light"] .header-divider { background: #dde0ea; }
+
+[data-theme="light"] .card {
+    background: #ffffff;
+    border-color: #dde0ea;
+}
+
+[data-theme="light"] .card:hover {
+    background: #f0f2fa;
+    border-color: rgba(79, 158, 255, 0.4);
+}
+
+[data-theme="light"] .card-title { color: #1a1d2a; }
+[data-theme="light"] .card-desc { color: #6b7080; }
+[data-theme="light"] .pill { background: #ffffff; border-color: #dde0ea; color: #6b7080; }
+[data-theme="light"] .modal { background: #ffffff; border-color: #dde0ea; }
+[data-theme="light"] .modal-title { color: #1a1d2a; }
+[data-theme="light"] .site-name { color: #1a1d2a; }
+[data-theme="light"] .filter-label { color: #6b7080; }
+[data-theme="light"] .category-title { color: #2b6fd4; }
+
+/* ─── Theme Toggle Button ────────────────────────────────────────────────── */
+.theme-toggle {
+    background: none;
+    border: 1px solid #252a38;
+    border-radius: 999px;
+    color: #5a6078;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.8rem;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.theme-toggle:hover {
+    border-color: #4f9eff;
+    color: #c8cdd8;
+}
+
+[data-theme="light"] .theme-toggle {
+    border-color: #dde0ea;
+    color: #6b7080;
+}
