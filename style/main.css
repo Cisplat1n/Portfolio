@@ -445,3 +445,48 @@ a { text-decoration: none; color: inherit; }
     background: rgba(79, 158, 255, 0.22);
     border-color: #4f9eff;
 }
+
+
+@media (max-width: 768px) {
+    /* Modal full-width on mobile */
+    .modal-backdrop {
+        padding: 16px;
+        align-items: flex-end;
+    }
+
+    .modal {
+        padding: 24px 20px;
+        border-radius: 10px 10px 0 0;
+        max-width: 100%;
+        animation: modal-slide-up 0.25s ease-out;
+    }
+
+    @keyframes modal-slide-up {
+        from { transform: translateY(100%); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Shrink sprite on mobile so it doesn't cover content */
+    .sprite-container {
+        transform: scale(0.6);
+        transform-origin: bottom left;
+    }
+
+    /* Filter pills smaller */
+    .pill, .pill-active {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+    }
+
+    /* Cards full width */
+    .project-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-name { font-size: 1.3rem; }
+    .main-content { padding: 20px 16px 28px; }
+    .header-divider { margin: 0 16px; }
+}
