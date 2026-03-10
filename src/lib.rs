@@ -50,6 +50,16 @@ fn all_projects() -> Vec<Project> {
             status: "WIP"
         },
         Project {
+            title: "BioClick",
+            desc: "A collaborative effort with a University friend to use Electron, Rust and Python to build a GUI, operating system Agnostic, BLAST wrapper that works with the BLAST web API and local installations.",
+            long_desc: "This project was made in conjunction with a friend, it aimed to produce a simple and sleek GUI application that could be used to interact with BLAST without command line tools or having to navigate to a web browser. It also seeks to reduce the complexity and confusion around BLAST parameters for new users whilst still allowing power users the flexibility to fine tune their parameters for their needs. ",
+            tags: &["Bioinformatics", "Python", "Rust"],
+            url: "https://github.com/Cisplat1n/BioClick",
+            category: "Collaboration",
+            status: "Hiatus"
+        },
+
+        Project {
             title: "",
             desc: "",
             long_desc: "",
@@ -57,13 +67,13 @@ fn all_projects() -> Vec<Project> {
             url: "",
             category: "",
             status: ""
-        },
 
+        }
     ]
 }
 
 const ALL_FILTERS: &[&str] = &[
-    "Rust", "ML / AI", "Python", "Data Science", "R", "WebAssembly",
+    "Rust", "ML / AI", "Python", "Data Science", "R", "WebAssembly", "Bioinformatics",
 ];
 
 const CATEGORIES: &[(&str, &str)] = &[
@@ -71,6 +81,7 @@ const CATEGORIES: &[(&str, &str)] = &[
     ("ML / AI",""),
     ("Python", "🐍"),
     ("Data Science",""),
+    ("Collaboration", ""),
 ];
 
 // ─── Sprite State ────────────────────────────────────────────────────────────
@@ -299,7 +310,6 @@ fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> imp
     let p = project.clone();
     view! {
         <div class="card" on:click=move |_| set_modal.set(Some(p.clone()))>
-            <h3 class="card-title">{project.title}</h3>
             <h3 class="card-title">{project.title}</h3>
             <span class=format!("status-badge status-{}", project.status.to_lowercase())>
             {project.status}
