@@ -334,43 +334,33 @@ fn SpriteBar(trigger: ReadSignal<&'static str>) -> impl IntoView {
         Duration::from_millis(60),
     );
 
+// Sheet: 512x64, 8 frames x 64x64, displayed at 2x = 128x128
+    let disp: u32 = 128;
+    let sheet_w: u32 = 1024;
+    let sheet_h: u32 = 128;
+
     let container_style = move || {
         if phase.get() == SpritePhase::Hidden { return "display:none;".to_string(); }
         let x = pos_x.get() as i64;
         format!("display:block;position:fixed;left:{x}px;bottom:0px;\
-                 width:166px;height:125px;z-index:9999;pointer-events:none;")
+                 width:{disp}px;height:{disp}px;z-index:9999;pointer-events:none;")
     };
+
     let sprite_style = move || {
         let src = which.get();
         if src.is_empty() { return "display:none;".to_string(); }
-
         let f = frame.get();
-        
-        // 1. Explicitly use f64 for all math to avoid casting errors
-        let frames_per_row = 12.0f64;
-        let img_width = 2000.0f64;
-        let img_height = 250.0f64;
-
-        // Each cell is exactly 166x125
-        let cell_width = 166.0f64;
-        let cell_height = 125.0f64;
-
-        let col = (f as f64 % frames_per_row).floor();
-        let row = (f as f64 / frames_per_row).floor();
-
-        let off_x = col * cell_width;
-        let off_y = row * cell_height;
-
+        let off = f * disp;
         let flip = if phase.get() == SpritePhase::RunOut { "transform:scaleX(-1);" } else { "" };
-
         format!(
-            "width:{cell_width}px;\
-             height:{cell_height}px;\
-             background-image:url('public/{src}.png');\
+            "width:{disp}px;\
+             height:{disp}px;\
+             background-image:url('/portfolio/public/{src}.png');\
              background-repeat:no-repeat;\
-             background-size:{img_width}px {img_height}px;\
-             background-position:-{off_x}px -{off_y}px;\
+             background-size:{sheet_w}px {sheet_h}px;\
+             background-position:-{off}px 0px;\
              image-rendering:pixelated;\
+             image-rendering:crisp-edges;\
              {flip}"
         )
     };
