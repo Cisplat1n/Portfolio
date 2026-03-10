@@ -14,6 +14,7 @@ struct Project {
     tags: &'static [&'static str],
     url: &'static str,
     category: &'static str,
+    status: &'static str, // "WIP", "Hiatus", "Finished"
 }
 
 fn all_projects() -> Vec<Project> {
@@ -28,6 +29,7 @@ fn all_projects() -> Vec<Project> {
             tags: &["ML / AI", "Python"],
             url: "https://github.com/Cisplat1n/Project_Intleacht_Shaorga",
             category: "Python",
+            status: "Hiatus"
         },
         Project {
             title: "This Portfolio",
@@ -36,6 +38,7 @@ fn all_projects() -> Vec<Project> {
             tags: &["Rust", "WebAssembly"],
             url: "#",
             category: "Rust",
+            status: "Finished"
         },
         Project {
             title: "Project_FiligineachtV2-RUST",
@@ -44,6 +47,7 @@ fn all_projects() -> Vec<Project> {
             tags: &["Rust", "Data Science"],
             url: "https://github.com/Cisplat1n/Project_FiligineachtV2-RUST",
             category: "Rust",
+            status: "WIP"
         },
         Project {
             title: "",
@@ -52,6 +56,7 @@ fn all_projects() -> Vec<Project> {
             tags: &["", ""],
             url: "",
             category: "",
+            status: ""
         },
 
     ]
@@ -295,6 +300,10 @@ fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> imp
     view! {
         <div class="card" on:click=move |_| set_modal.set(Some(p.clone()))>
             <h3 class="card-title">{project.title}</h3>
+            <h3 class="card-title">{project.title}</h3>
+            <span class=format!("status-badge status-{}", project.status.to_lowercase())>
+            {project.status}
+            </span>
             <p class="card-desc">{project.desc}</p>
             <div class="card-tags">
                 {project.tags.iter().map(|&t| view! {
