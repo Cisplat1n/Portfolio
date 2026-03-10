@@ -543,9 +543,3 @@ a { text-decoration: none; color: inherit; }
     border-color: #dde0ea;
     color: #6b7080;
 }
-/* ─── DNA Background ────────────────────────────────────────────────────────── */
-/* Ensure content sits above the canvas */
-.site-header, .main-content, .header-divider, .filter-section {
-    position: relative;
-    z-index: 1;
-}
