@@ -970,7 +970,9 @@ name = "portfolio"
 version = "0.1.0"
 dependencies = [
  "console_error_panic_hook",
+ "gloo-net",
  "leptos",
+ "serde_json",
  "wasm-bindgen",
  "web-sys",
 ]

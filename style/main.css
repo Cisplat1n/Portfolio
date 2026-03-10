@@ -543,3 +543,22 @@ a { text-decoration: none; color: inherit; }
     border-color: #dde0ea;
     color: #6b7080;
 }
+
+/* ─── Card Stats ─────────────────────────────────────────────────────────── */
+.card-stats {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #1e2230;
+}
+
+.stat {
+    font-size: 0.7rem;
+    color: #3d4460;
+    letter-spacing: 0.03em;
+}
+
+.stat span {
+    color: #5a6078;
+}
