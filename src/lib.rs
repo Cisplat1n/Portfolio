@@ -41,7 +41,7 @@ fn all_projects() -> Vec<Project> {
             status: "Finished"
         },
         Project {
-            title: "Project_FiligineachtV2-RUST",
+            title: "Project FiligineachtV2-RUST",
             desc: "Discordance resolution pipeline for phylogenetic quartets leveraging PhySquirrel to build consensus networks.",
             long_desc: "A port of my MSc dissertation project (orignally written in python) in Rust, it looks to handle some of the performance and scaling issues flagged during my MSc presentation (file scaling, compute cost, process time etc.). It extracts quartets of taxa from gene trees, roots them to make semi directed where appropriate, and then feeds them into the PhySquirrel python library (via PyO3 bindings) to make a level 1 semi directed consensus network. ",
             tags: &["Rust", "Data Science"],
@@ -72,6 +72,28 @@ fn all_projects() -> Vec<Project> {
         },
 
         Project {
+            title: "Project Vantage Point",
+            desc: "",
+            long_desc: "",
+            tags: &["Python", "SQL",],
+            url: "https://github.com/Cisplat1n/Project_Vantage_Point",
+            category: "Databases",
+            status: "WIP"
+
+        },
+
+        Project {
+            title: "Rust Code Notebook",
+            desc: "A code notebook I use whilst learning rust.",
+            long_desc: "A notebook I am keeping whilst working through the Rust documentation page and then eventually the Rustling exercises.",
+            tags: &["Rust", "Notes"],
+            url: "https://github.com/Cisplat1n/rust_notes/tree/main",
+            category: "Notes",
+            status: "WIP"
+
+        }, 
+
+        Project {
             title: "",
             desc: "",
             long_desc: "",
@@ -85,7 +107,7 @@ fn all_projects() -> Vec<Project> {
 }
 
 const ALL_FILTERS: &[&str] = &[
-    "Rust", "ML / AI", "Python", "Data Science", "R", "WebAssembly", "Bioinformatics",
+    "Rust", "ML / AI", "Python", "Data Science", "R", "WebAssembly", "Bioinformatics", "SQL", "Notes"
 ];
 
 const CATEGORIES: &[(&str, &str)] = &[
@@ -95,6 +117,8 @@ const CATEGORIES: &[(&str, &str)] = &[
     ("Data Science",""),
     ("Collaboration", ""),
     ("Notes",""),
+    ("Databases",""),
+    ("Notes","")
 ];
 
 // ─── Sprite State ────────────────────────────────────────────────────────────
