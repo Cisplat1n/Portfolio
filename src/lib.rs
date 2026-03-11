@@ -73,8 +73,8 @@ fn all_projects() -> Vec<Project> {
 
         Project {
             title: "Project Vantage Point",
-            desc: "",
-            long_desc: "",
+            desc: "A demonstration of interacting with a SQL database to extract data, transform it and then gain insight. This is done via python.",
+            long_desc: "A collaborative demo with a friend where we split the project work in half and work with a database. This is done via a SQL database hosted on SUPABASE. Data will be loaded into the database, then we will extract it, transform it and retrieve insights. This serves as an example scenario of what might happen in a real working team. ",
             tags: &["Python", "SQL",],
             url: "https://github.com/Cisplat1n/Project_Vantage_Point",
             category: "Databases",
@@ -118,7 +118,6 @@ const CATEGORIES: &[(&str, &str)] = &[
     ("Collaboration", ""),
     ("Notes",""),
     ("Databases",""),
-    ("Notes","")
 ];
 
 // ─── Sprite State ────────────────────────────────────────────────────────────
