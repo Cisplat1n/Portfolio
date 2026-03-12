@@ -425,7 +425,7 @@ a { text-decoration: none; color: inherit; }
 
 .modal-desc {
     font-size: 0.88rem;
-    color: #9ba2b8;
+    color: #ffffff;;
     line-height: 1.7;
     margin-bottom: 28px;
 }
@@ -501,6 +501,7 @@ a { text-decoration: none; color: inherit; }
 [data-theme="light"] .site-header,
 [data-theme="light"] .app { background: #f5f0eb; }
 
+
 [data-theme="light"] .header-divider { background: #e0d9d0; }
 
 [data-theme="light"] .card {
@@ -518,6 +519,8 @@ a { text-decoration: none; color: inherit; }
     color: #1a5cb8;
     border: 1px solid rgba(43, 111, 212, 0.25);
 }
+
+[data-theme="light"] .modal-desc { color: #000000; }
 
 [data-theme="light"] .card-title { color: #1a1d2a; }
 [data-theme="light"] .card-desc { color: #000000; }  /* was #6b7080, darker for contrast */
