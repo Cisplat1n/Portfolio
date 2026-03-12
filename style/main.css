@@ -2,7 +2,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 16px; }
+html { font-size: 18px; }
 
 body {
     background: #0d0f14;
@@ -22,7 +22,8 @@ a { text-decoration: none; color: inherit; }
     min-height: 100vh;
 }
 
-/* ─── Header ────────────────────────────────────────────────────────────────── */
+/* ─── Header ────────────────────────────────────────────────────────────────── */ 
+/* default in dark mode */
 
 .site-header {
     display: flex;
@@ -47,7 +48,7 @@ a { text-decoration: none; color: inherit; }
 
 .site-tagline {
     font-size: 0.85rem;
-    color: #5a6078;
+    color: #7a8098;
     letter-spacing: 0.05em;
 }
 
@@ -58,7 +59,7 @@ a { text-decoration: none; color: inherit; }
 
 .nav-link {
     font-size: 0.9rem;
-    color: #5a6078;
+    color: #7a8098;
     letter-spacing: 0.05em;
     padding-bottom: 3px;
     border-bottom: 2px solid transparent;
@@ -102,7 +103,7 @@ a { text-decoration: none; color: inherit; }
 
 .filter-label {
     font-size: 0.85rem;
-    color: #5a6078;
+    color: #7a8098;
     white-space: nowrap;
 }
 
@@ -120,7 +121,7 @@ a { text-decoration: none; color: inherit; }
     border-radius: 999px;
     border: 1px solid #252a38;
     background: #13161e;
-    color: #5a6078;
+    color: #7a8098;
     font-family: 'Courier New', 'Consolas', monospace;
     font-size: 0.8rem;
     cursor: pointer;
@@ -219,7 +220,7 @@ a { text-decoration: none; color: inherit; }
 
 .card-desc {
     font-size: 0.78rem;
-    color: #5a6078;
+    color: #7a8098;
     line-height: 1.55;
     margin-bottom: 10px;
 }
@@ -394,7 +395,7 @@ a { text-decoration: none; color: inherit; }
     right: 20px;
     background: none;
     border: none;
-    color: #5a6078;
+    color: #7a8098;
     font-size: 1.6rem;
     cursor: pointer;
     line-height: 1;
@@ -424,7 +425,7 @@ a { text-decoration: none; color: inherit; }
 
 .modal-desc {
     font-size: 0.88rem;
-    color: #8b92a8;
+    color: #9ba2b8;
     line-height: 1.7;
     margin-bottom: 28px;
 }
@@ -493,32 +494,32 @@ a { text-decoration: none; color: inherit; }
 
 /* ─── Light Mode ─────────────────────────────────────────────────────────── */
 [data-theme="light"] body {
-    background: #f5f6fa;
+    background: #f5f0eb;
     color: #2a2d3a;
 }
 
 [data-theme="light"] .site-header,
-[data-theme="light"] .app { background: #f5f6fa; }
+[data-theme="light"] .app { background: #f5f0eb; }
 
-[data-theme="light"] .header-divider { background: #dde0ea; }
+[data-theme="light"] .header-divider { background: #e0d9d0; }
 
 [data-theme="light"] .card {
-    background: #ffffff;
-    border-color: #dde0ea;
+    background: #faf7f4;
+    border-color: #e0d9d0;
 }
 
 [data-theme="light"] .card:hover {
-    background: #f0f2fa;
+    background: #ede8e3;
     border-color: rgba(79, 158, 255, 0.4);
 }
 
 [data-theme="light"] .card-title { color: #1a1d2a; }
-[data-theme="light"] .card-desc { color: #6b7080; }
-[data-theme="light"] .pill { background: #ffffff; border-color: #dde0ea; color: #6b7080; }
-[data-theme="light"] .modal { background: #ffffff; border-color: #dde0ea; }
+[data-theme="light"] .card-desc { color: #4a5060; }  /* was #6b7080, darker for contrast */
+[data-theme="light"] .pill { background: #faf7f4; border-color: #e0d9d0; color: #4a5060; }
+[data-theme="light"] .modal { background: #faf7f4; border-color: #e0d9d0; }
 [data-theme="light"] .modal-title { color: #1a1d2a; }
 [data-theme="light"] .site-name { color: #1a1d2a; }
-[data-theme="light"] .filter-label { color: #6b7080; }
+[data-theme="light"] .filter-label { color: #4a5060; }
 [data-theme="light"] .category-title { color: #2b6fd4; }
 
 /* ─── Theme Toggle Button ────────────────────────────────────────────────── */
@@ -555,7 +556,7 @@ a { text-decoration: none; color: inherit; }
 
 .stat {
     font-size: 0.7rem;
-    color: #5a6078;
+    color: #7a8098;
     letter-spacing: 0.03em;
 }
 
