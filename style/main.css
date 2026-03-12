@@ -236,8 +236,8 @@ a { text-decoration: none; color: inherit; }
     padding: 2px 8px;
     border-radius: 3px;
     background: rgba(79, 158, 255, 0.08);
-    color: rgba(79, 158, 255, 0.8);
-    border: 1px solid rgba(79, 158, 255, 0.15);
+    color: #7ab8ff;                          /* was rgba(79,158,255,0.8) */
+    border: 1px solid rgba(79, 158, 255, 0.2);
     letter-spacing: 0.03em;
 }
 
@@ -511,6 +511,12 @@ a { text-decoration: none; color: inherit; }
 [data-theme="light"] .card:hover {
     background: #ede8e3;
     border-color: rgba(79, 158, 255, 0.4);
+}
+
+[data-theme="light"] .card-tag {
+    background: rgba(43, 111, 212, 0.08);
+    color: #1a5cb8;
+    border: 1px solid rgba(43, 111, 212, 0.25);
 }
 
 [data-theme="light"] .card-title { color: #1a1d2a; }
