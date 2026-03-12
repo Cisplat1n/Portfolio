@@ -78,7 +78,7 @@ fn all_projects() -> Vec<Project> {
             tags: &["Python", "SQL",],
             url: "https://github.com/Cisplat1n/Project_Vantage_Point",
             category: "Databases",
-            status: "WIP"
+            status: "TBD"
 
         },
 
@@ -90,6 +90,17 @@ fn all_projects() -> Vec<Project> {
             url: "https://github.com/Cisplat1n/rust_notes/tree/main",
             category: "Notes",
             status: "WIP"
+
+        }, 
+
+        Project {
+            title: "Python Code Notebook",
+            desc: "A code notebook I use whilst learning Python.",
+            long_desc: "A notebook I am keeping whilst working through some Python courses for both data science and other elements of python I am interested in.",
+            tags: &["Python", "Notes"],
+            url: "#",
+            category: "Notes",
+            status: "TBD"
 
         }, 
 
