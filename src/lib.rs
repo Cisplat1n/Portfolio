@@ -87,7 +87,7 @@ fn all_projects() -> Vec<Project> {
             desc: "A code notebook I use whilst learning rust.",
             long_desc: "A notebook I am keeping whilst working through the Rust documentation page and then eventually the Rustling exercises.",
             tags: &["Rust", "Notes"],
-            url: "https://github.com/Cisplat1n/rust_notes/tree/main",
+            url: "https://github.com/Cisplat1n/rust_notes",
             category: "Notes",
             status: "WIP"
 
