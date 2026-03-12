@@ -103,7 +103,7 @@ a { text-decoration: none; color: inherit; }
 
 .filter-label {
     font-size: 0.85rem;
-    color: #7a8098;
+    color: #ffffff;
     white-space: nowrap;
 }
 
@@ -220,7 +220,7 @@ a { text-decoration: none; color: inherit; }
 
 .card-desc {
     font-size: 0.78rem;
-    color: #7a8098;
+    color: #ffffff;
     line-height: 1.55;
     margin-bottom: 10px;
 }
@@ -520,12 +520,12 @@ a { text-decoration: none; color: inherit; }
 }
 
 [data-theme="light"] .card-title { color: #1a1d2a; }
-[data-theme="light"] .card-desc { color: #4a5060; }  /* was #6b7080, darker for contrast */
+[data-theme="light"] .card-desc { color: #000000; }  /* was #6b7080, darker for contrast */
 [data-theme="light"] .pill { background: #faf7f4; border-color: #e0d9d0; color: #4a5060; }
 [data-theme="light"] .modal { background: #faf7f4; border-color: #e0d9d0; }
 [data-theme="light"] .modal-title { color: #1a1d2a; }
 [data-theme="light"] .site-name { color: #1a1d2a; }
-[data-theme="light"] .filter-label { color: #4a5060; }
+[data-theme="light"] .filter-label { color: #000000; }
 [data-theme="light"] .category-title { color: #2b6fd4; }
 
 /* ─── Theme Toggle Button ────────────────────────────────────────────────── */
