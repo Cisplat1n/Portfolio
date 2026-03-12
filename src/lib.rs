@@ -321,12 +321,14 @@ fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> imp
     if !repo_path.is_empty() && url.contains("github.com") {
         let repo_path_clone = repo_path.clone();
         spawn_local(async move {
-            let api_url = format!("https://api.github.com/repos/{}", repo_path_clone);
-            if let Ok(resp) = gloo_net::http::Request::get(&api_url)
-                .header("Accept", "application/vnd.github.v3+json")
-                .send()
-                .await
-            {
+                let api_url = format!("https://api.github.com/repos/{}", repo_path_clone);
+
+                if let Ok(resp) = gloo_net::http::Request::get(&api_url)
+                    .header("Accept", "application/vnd.github.v3+json")
+                    .header("User-Agent", "portfolio-site")
+                    .send()
+                    .await
+                {
                 if let Ok(json) = resp.json::<serde_json::Value>().await {
                     if let Some(pushed) = json["pushed_at"].as_str() {
                         let date = pushed.get(..10).unwrap_or(pushed).to_string();
@@ -339,8 +341,10 @@ fn ProjectCard(project: Project, set_modal: WriteSignal<Option<Project>>) -> imp
                 "https://api.github.com/repos/{}/commits?per_page=1",
                 repo_path_clone
             );
+
             if let Ok(resp) = gloo_net::http::Request::get(&commits_url)
                 .header("Accept", "application/vnd.github.v3+json")
+                .header("User-Agent", "portfolio-site")
                 .send()
                 .await
             {
